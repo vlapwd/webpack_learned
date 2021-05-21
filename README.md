@@ -46,3 +46,12 @@ module.exports = {
   }
 };
 ```
+### mode
+- development: 開発モード，デバッグしやすい状態にバンドルする
+- production: 本番モード，なるべくファイルサイズを小さくする（初期値）
+```js
+module.exports = {
+  mode: 'development',
+//...
+}
+```
