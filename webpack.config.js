@@ -21,6 +21,18 @@ module.exports = {
                         plugins: ['@babel/plugin-syntax-jsx']
                     }
                 }
+            },
+            {
+                test: /\.(sa|sc|c)ss$/,
+                exclude: /node_modules/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: { url: false }
+                    },
+                    'sass-loader'
+                ]
             }
         ]
     },

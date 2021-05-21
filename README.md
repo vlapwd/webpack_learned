@@ -246,6 +246,7 @@ module: {
       }
     ]
   },
+  // https://webpack.js.org/configuration/resolve/
   resolve: {
     extensions: ['.js', '.jsx', '.json']  // .jsxも省略可能対象にする
   }
@@ -254,3 +255,43 @@ module: {
   最初から有効になっていないオプションのプラグインを利用する場合に指定する必要がある
 
   https://babeljs.io/docs/en/babel-preset-react#options
+
+
+### Sass
+Sassをバンドルしたい
+
+必要なもののインストール
+` npm install sass style-loader css-loader sass-loader node-sass --save-dev`
+- style-loader: CSSを<style>タグでHTMLに埋め込む
+- css-loader: CSSファイルをJS用モジュールに変換する
+- sass-loader: SassファイルをCSSに変換する
+- node-sass: Sassをコンパイルする
+
+webpack.config.jsに設定を追加する
+```js
+ module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/, // .sass or .scss or .css
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          //optionを足す場合は配列にしてまとめる
+          {
+            loader: 'css-loader',
+            options: { url: false }//url()の画像ファイルをバンドルに含めるかどうか
+          },
+          'sass-loader'
+        ]
+      }
+    ]
+  }
+```
+
+webpackが辿れるようにするためにentryのjsでimportする
+Loaderが`<head>`に埋め込むので、importして辿れるようにするだけでよい
+```js
+//index.js
+import 'file.scss';
+```
+
