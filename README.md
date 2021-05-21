@@ -105,7 +105,7 @@ JSX, TypeScriptの変換にも使われるらしい
 `npm install @babel/core @babel/cli @babel/preset-env --save-dev`
 
 設定を書く
-```
+```json
 //.babelrc
 {
   　"presets": ["@babel/preset-env"]
@@ -123,3 +123,97 @@ JSX, TypeScriptの変換にも使われるらしい
 ファイルを用意して実行する
 ```
 $ npx babel [変換するjs] --out-file [変換後の出力先]
+```
+
+
+### Loader
+webpackはentryからimportを辿ってファイルをまとめていくが、jsとjsonしかまとめられないため、
+[Loader](https://webpack.js.org/concepts/#loaders)を使ってまとめる
+```js
+module.exports = {
+  output: {
+    filename: 'my-first-webpack.bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.txt$/, use: 'raw-loader' }
+    ]
+  }
+};
+//やあ！webpackコンパイラ、君がimportかrequire文で'.txt'に該当するファイルに遭遇したら、
+//バンドる前にraw-loaderを使ってそのファイルを変換してくれないかな。
+```
+
+### webpack + babel
+balelでjsをコンパイルした後、webpackでバンドルする
+
+`npm install babel-loader --save-dev`
+
+webpack.config.jsに設定を追加
+```js
+module: {
+    rules: [
+      { 
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',   //loader名
+          options: {                //Babelの設定
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
+```
+
+Promiseとかの機能はbabelで変換されないのでpolyfillを別で設定する必要がある  
+https://qiita.com/koedamon/items/6cf2201be78c3d79516d#%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E7%B5%B1%E5%90%88%E3%81%A8polyfill%E3%81%AE%E8%A8%AD%E5%AE%9A
+https://engineer.recruit-lifestyle.co.jp/techblog/2019-12-08-babel-approach/
+
+> クライアントサイドの JavaScript 開発する場合 Ecma International が策定する ECMAScript と
+ WHATWG / W3C が策定する Web API を扱うことになりますが、 
+ Babel の Polyfill 対象となるのは JavaScript コア言語と一部の Web API で、大部分の Web API は対象ではありません。
+ ```js
+ //webpack.config.js
+ use: {
+  loader: 'babel-loader',
+  options: {
+    presets: [
+      [
+        '@babel/preset-env', {
+          'useBuiltIns': 'usage' // これだとエラーになるので設定は.babelrcかpackage.jsonに書く必要がある
+        }
+      ]
+    ]
+  }
+}
+```
+修正後
+```js
+//webpack.config.js
+use: {
+ loader: 'babel-loader',
+ options: {
+   presets: [
+     [
+       '@babel/preset-env'// これはこれで必要
+     ]
+   ]
+ }
+}
+```
+```json
+// .babelrc
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            // こっちで設定を追加する
+            {
+                "useBuiltIns": "usage"
+            }
+        ]
+    ]
+}
+```
