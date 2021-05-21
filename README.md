@@ -34,3 +34,15 @@ test();
  */
 (()=>{"use strict";console.log("Hello World!!")})();
 ```
+
+### webpack.config.js
+設定ファイル
+```js
+module.exports = {
+  entry: './src/index.js',//起点になるファイル。ここからimportを辿る 
+  output: {
+    path: __dirname + '/dist',//出力先　__dirnameはnodeで用意されている変数
+    filename: 'sample.js'// 出力するファイル名
+  }
+};
+```
