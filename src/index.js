@@ -1,12 +1,8 @@
-import { test } from './component/test';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Panel from './component/panel';
 
-const keyName = 'hei';
-
-let params = {
-    foo: 'foooooo',
-    bar: 'baaaaa',
-    baz: 'zzzzzz',
-    [keyName]: 'moimoi'
-};
-
-test(params);
+ReactDOM.render(
+    <Panel />,
+    document.getElementById('app')
+);

@@ -217,3 +217,40 @@ use: {
     ]
 }
 ```
+
+### React
+
+Reactで書いたアプリをBabelで変換してwebpackでバンドルする
+
+必要なもののインストール
+
+`npm install react react-dom @babel/preset-react --save-dev`
+
+webpack.config.jsに設定を追加する
+```js
+module: {
+    rules: [
+      {
+        test: /\.js[x]?$/,  // .jsxも対象に含む
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react' //ReactのPresetを追加
+            ],
+            plugins: ['@babel/plugin-syntax-jsx'] //JSXパース用
+          }
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json']  // .jsxも省略可能対象にする
+  }
+  ```
+  pluginのコレクションがpresetで、  
+  最初から有効になっていないオプションのプラグインを利用する場合に指定する必要がある
+
+  https://babeljs.io/docs/en/babel-preset-react#options
