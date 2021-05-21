@@ -2,6 +2,7 @@
 
 参考  
 https://qiita.com/koedamon/items/3e64612d22f3473f36a4  
+https://qiita.com/10mi8o/items/2477f2640291f0ce6687  
 webpackはimportから依存を辿りjsファイルを1つにまとめる
 
 最初に必要なもの
@@ -331,3 +332,17 @@ module.exports = {
     })
   ]
 };
+```
+
+### webpack-dev-server
+
+webpackで開発用のサーバーを立てられるようにする
+
+必要なもののインストールして実行
+```
+$ npm install --save-dev webpack-dev-server
+$ npx webpack serve
+```
+http://localhost:8080 にアクセスするとディレクトリが表示されるので設定を追加して構築していく
+
+
