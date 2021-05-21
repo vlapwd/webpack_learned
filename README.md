@@ -83,3 +83,15 @@ if (watch) {
     compiler.run((err, stats) => {
 //...
 ```
+
+### 本番用と開発用で設定ファイルを分けたい
+```json
+//package.json
+{
+  "scripts": {
+    "start": "webpack -w --config webpack.dev.config",
+    "build": "webpack --config webpack.pro.config"
+  },
+//...
+}
+```
