@@ -56,3 +56,30 @@ module.exports = {
 //...
 }
 ```
+
+### watch
+ホットリロードが効くようになる
+
+```
+$ webpack [--watch | -w]
+```
+もしくは
+```js
+module.exports = {
+  watch: true,
+  watchOptions: {
+    ignored: /node_modules/ //node_modules以下は追跡しない
+  },
+  /* 略 */
+};
+```
+```js
+//memo
+//webpack.js line135
+const { compiler, watch, watchOptions } = create();
+if (watch) {
+    compiler.watch(watchOptions, callback);
+} else {
+    compiler.run((err, stats) => {
+//...
+```
