@@ -52,6 +52,7 @@ module.exports = {
 ```js
 module.exports = {
   mode: 'development',
+  devtool: 'inline-source-map',//デバッグ用に元ファイルを参照できるようにする
 //...
 }
 ```
