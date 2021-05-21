@@ -95,3 +95,31 @@ if (watch) {
 //...
 }
 ```
+
+### Babel
+jsのコンパイラ。主にES5に変換する。ブラウザ差異の吸収するためのもの？  
+JSX, TypeScriptの変換にも使われるらしい
+
+必要なもののインストール
+
+`npm install @babel/core @babel/cli @babel/preset-env --save-dev`
+
+設定を書く
+```
+//.babelrc
+{
+  　"presets": ["@babel/preset-env"]
+}
+{
+    //複数設定したときは後ろから実行される(react -> env)
+    //presetごとの設定は配列で渡す
+  　"presets": [
+      ["@babel/preset-env", {<@babel/preset-envの設定値>}],
+    　"@babel/preset-react"  
+    ]
+}
+
+```
+ファイルを用意して実行する
+```
+$ npx babel [変換するjs] --out-file [変換後の出力先]
