@@ -295,3 +295,39 @@ Loaderが`<head>`に埋め込むので、importして辿れるようにするだ
 import 'file.scss';
 ```
 
+### いや、埋め込みじゃなくてCSSファイルがいいなぁ
+
+プラグインを使って分離する
+
+> This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
+
+
+`$ npm install mini-css-extract-plugin --save-dev`
+
+設定を追加する
+```js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader, // style-loaderの代わり
+          {
+            loader: 'css-loader',
+            options: { url: false }
+          },
+          'sass-loader'
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/sample.css',  // /dist/css/sample.cssに出力
+    })
+  ]
+};

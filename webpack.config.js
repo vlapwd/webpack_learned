@@ -1,10 +1,12 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     entry: './src/index.js',
     output: {
-        path: __dirname + '/dist/js',
-        filename: 'sample.js'
+        path: __dirname + '/dist',
+        filename: 'js/sample.js'
     },
     module: {
         rules: [
@@ -26,7 +28,7 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 exclude: /node_modules/,
                 use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: { url: false }
@@ -38,5 +40,10 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json']
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/sample.css',
+        })
+    ]
 };
