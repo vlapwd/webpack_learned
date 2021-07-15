@@ -45,5 +45,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/sample.css',
         })
-    ]
+    ],
+
+    devServer: {
+        contentBase: `./dist`,
+        hot: true
+    }
 };

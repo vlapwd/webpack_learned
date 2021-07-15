@@ -343,6 +343,23 @@ webpackで開発用のサーバーを立てられるようにする
 $ npm install --save-dev webpack-dev-server
 $ npx webpack serve
 ```
-http://localhost:8080 にアクセスするとディレクトリが表示されるので設定を追加して構築していく
+http://localhost:8080 にアクセスするとディレクトリが表示されるので設定を追加する
 
+https://webpack.js.org/guides/development/#using-webpack-dev-server
 
+```js
+devServer: {
+  contentBase: './dist',// distからファイルを提供する
+}
+```
+
+hotオプションでホットリロードがつく
+
+https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr
+
+```js
+devServer: {
+  contentBase: './dist',
+  hot: true,
+}
+```
